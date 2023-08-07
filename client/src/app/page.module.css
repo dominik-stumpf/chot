@@ -1,0 +1,44 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: stretch;
+  padding: 6rem;
+  height: 100vh;
+  max-height: 100vh;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 400px) {
+  .main {
+    padding: 2rem;
+  }
+}
+
+.textInput {
+  border: 1px solid var(--foreground);
+  background-color: var(--background);
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  resize: none;
+  min-height: 3rem;
+}
+
+.list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  flex-flow: column nowrap;
+  font-size: 1.5rem;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.highlight {
+  font-weight: 700;
+}
+
+.dim {
+  font-weight: 160;
+}
