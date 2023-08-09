@@ -1,7 +1,7 @@
 'use client';
 
-import { CustomContext } from './layout';
 import styles from './page.module.css';
+import { CustomContext } from './socket-provider';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';

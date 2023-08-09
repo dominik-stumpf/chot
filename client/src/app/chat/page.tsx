@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomContext } from '../layout';
+import { CustomContext } from '../socket-provider';
 import styles from './page.module.css';
 import {
   KeyboardEvent,

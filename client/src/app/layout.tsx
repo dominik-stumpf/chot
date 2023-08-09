@@ -1,20 +1,11 @@
-'use client';
-
 import './globals.css';
+import { SocketProvider } from './socket-provider';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 import { Socket } from 'socket.io-client';
 
 const inter = Inter({ subsets: ['latin'] });
-interface CustomContextProps {
-  socket: Socket | null;
-  setSocket: Dispatch<SetStateAction<Socket | null>>;
-}
-
-export const CustomContext = createContext<CustomContextProps>(
-  {} as CustomContextProps,
-);
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -26,14 +17,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [socket, setSocket] = useState<null | Socket>(null);
-
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <CustomContext.Provider value={{ socket, setSocket }}>
-          {children}
-        </CustomContext.Provider>
+        <SocketProvider>{children}</SocketProvider>
       </body>
     </html>
   );
