@@ -15,7 +15,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: '*' } });
 
-const PORT = 80;
+const port = 3444;
 
 function sendDummyText(socket: Socket) {
   for (let i = 0; i < 32; i += 1) {
@@ -37,6 +37,6 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-httpServer.listen(PORT, () => {
-  console.log(`server listening on port ${PORT}`);
+httpServer.listen(port, () => {
+  console.log(`server listening on port ${port}`);
 });
