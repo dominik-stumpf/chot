@@ -5,6 +5,6 @@
   "repository": "git@github.com:dominik-stumpf/chot.git",
   "author": "Dominik Stumpf <s.dominik.work@gmail.com>",
   "license": "MIT",
-  "workspaces": ["server", "client", "shared-types"],
+  "workspaces": ["server", "client"],
   "private": "true"
 }
