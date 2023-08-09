@@ -15,7 +15,13 @@ export default function Page() {
     event.preventDefault();
     for (const [key, value] of data.entries()) {
       if (key === 'host' && typeof value === 'string') {
-        setSocket(io(value));
+        setSocket(
+          io(value, {
+            extraHeaders: {
+              'Content-Security-Policy': 'upgrade-insecure-requests',
+            },
+          }),
+        );
       }
     }
   };
