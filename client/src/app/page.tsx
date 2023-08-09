@@ -15,7 +15,7 @@ export default function Page() {
     event.preventDefault();
     for (const [key, value] of data.entries()) {
       if (key === 'host' && typeof value === 'string') {
-        setSocket(io(value, { secure: false }));
+        setSocket(io(value));
       }
     }
   };
