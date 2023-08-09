@@ -9,7 +9,7 @@ import {
 } from 'react';
 import { Socket } from 'socket.io-client';
 
-interface CustomContextProps {
+interface SocketContextProps {
   socket: Socket | null;
   setSocket: Dispatch<SetStateAction<Socket | null>>;
   socketID: string | undefined;
@@ -20,8 +20,8 @@ interface SocketProviderProps {
   children: ReactNode;
 }
 
-export const CustomContext = createContext<CustomContextProps>(
-  {} as CustomContextProps,
+export const SocketContext = createContext<SocketContextProps>(
+  {} as SocketContextProps,
 );
 
 export function SocketProvider({ children }: SocketProviderProps) {
@@ -29,10 +29,10 @@ export function SocketProvider({ children }: SocketProviderProps) {
   const [socketID, setSocketID] = useState<undefined | string>();
 
   return (
-    <CustomContext.Provider
+    <SocketContext.Provider
       value={{ socket, setSocket, socketID, setSocketID }}
     >
       {children}
-    </CustomContext.Provider>
+    </SocketContext.Provider>
   );
 }

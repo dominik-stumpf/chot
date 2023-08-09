@@ -13,11 +13,14 @@
     "@types/node": "20.4.7",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "bufferutil": "^4.0.7",
     "next": "13.4.12",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "socket.io-client": "^4.7.2",
-    "typescript": "5.1.6"
+    "supports-color": "8.1.1",
+    "typescript": "5.1.6",
+    "utf-8-validate": "^6.0.3"
   },
   "devDependencies": {
     "rome": "^12.1.3"

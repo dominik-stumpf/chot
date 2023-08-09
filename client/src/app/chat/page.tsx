@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomContext } from '../../socket-provider';
+import { SocketContext } from '../../socket-provider';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -19,7 +19,7 @@ interface ResponseMessage {
 export default function Page() {
   const [messages, setMessages] = useState<ResponseMessage[]>([]);
   const listRef = useRef<null | HTMLUListElement>(null);
-  const { socket, socketID } = useContext(CustomContext);
+  const { socket, socketID } = useContext(SocketContext);
   const router = useRouter();
 
   if (socket === null) {
