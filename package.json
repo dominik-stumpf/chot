@@ -1,6 +1,6 @@
 {
   "name": "chot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "repository": "git@github.com:dominik-stumpf/chot.git",
   "author": "Dominik Stumpf <s.dominik.work@gmail.com>",
