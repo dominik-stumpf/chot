@@ -1,27 +1,21 @@
 'use client';
 
+import { CustomContext } from '../socket-provider';
 import styles from './page.module.css';
-import { CustomContext } from './socket-provider';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 import io from 'socket.io-client';
 
 export default function Page() {
   const router = useRouter();
-  const { socket, setSocket } = useContext(CustomContext);
+  const { socket, setSocket, setSocketID } = useContext(CustomContext);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     const data = new FormData(event.currentTarget);
     event.preventDefault();
     for (const [key, value] of data.entries()) {
       if (key === 'host' && typeof value === 'string') {
-        setSocket(
-          io(value, {
-            extraHeaders: {
-              'Content-Security-Policy': 'upgrade-insecure-requests',
-            },
-          }),
-        );
+        setSocket(io(value));
       }
     }
   };
@@ -30,6 +24,9 @@ export default function Page() {
     if (socket === null) {
       return;
     }
+    socket.on('i', (response: string) => {
+      setSocketID(response);
+    });
     socket.on('connect', () => {
       router.push('/chat');
     });

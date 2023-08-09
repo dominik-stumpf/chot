@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "write-ci": "rome check --apply src && rome format --write src"
   },
   "dependencies": {
     "@types/node": "20.4.7",

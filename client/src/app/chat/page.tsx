@@ -1,8 +1,9 @@
 'use client';
 
-import { CustomContext } from '../socket-provider';
+import { CustomContext } from '../../socket-provider';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { KeyboardEvent, useContext, useEffect, useRef, useState } from 'react';
 
 interface MessageType {
@@ -17,20 +18,23 @@ interface ResponseMessage {
 
 export default function Page() {
   const [messages, setMessages] = useState<ResponseMessage[]>([]);
-  const clientID = useRef<string | undefined>(undefined);
   const listRef = useRef<null | HTMLUListElement>(null);
-  const { socket } = useContext(CustomContext);
+  const { socket, socketID } = useContext(CustomContext);
+  const router = useRouter();
 
   if (socket === null) {
     return;
   }
 
   useEffect(() => {
+    if (socket === null) {
+      router.push('/');
+    }
+  }, [socket]);
+
+  useEffect(() => {
     socket.on('m', (message: ResponseMessage) => {
       setMessages((prev) => [...prev, message]);
-    });
-    socket.on('i', (responseID: string) => {
-      clientID.current = responseID;
     });
     socket.on('connect_error', (error) => {
       console.log(`socket connection error: ${error.message}`);
@@ -75,9 +79,7 @@ export default function Page() {
           return (
             <li
               key={message.timestamp}
-              className={
-                clientID.current === message.socketID ? styles.dim : ''
-              }
+              className={socketID === message.socketID ? styles.dim : ''}
             >
               {message.data}
             </li>

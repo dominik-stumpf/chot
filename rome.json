@@ -14,7 +14,7 @@
         "noRedundantUseStrict": "off"
       },
       "correctness": {
-        "noUnusedVariables": "off"
+        "noUnusedVariables": "warn"
       },
       "nursery": {
         "all": true,
