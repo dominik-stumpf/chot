@@ -3,8 +3,8 @@
 import styles from './page.module.css';
 import { CustomContext } from './socket-provider';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
-import io, { Socket } from 'socket.io-client';
+import { useContext, useEffect } from 'react';
+import io from 'socket.io-client';
 
 export default function Page() {
   const router = useRouter();
@@ -15,15 +15,18 @@ export default function Page() {
     event.preventDefault();
     for (const [key, value] of data.entries()) {
       if (key === 'host' && typeof value === 'string') {
-        setSocket(io(value, { secure: true }));
+        setSocket(io(value, { secure: false }));
       }
     }
   };
 
   useEffect(() => {
-    if (socket !== null) {
-      router.push('/chat');
+    if (socket === null) {
+      return;
     }
+    socket.on('connect', () => {
+      router.push('/chat');
+    });
   }, [socket]);
 
   return (

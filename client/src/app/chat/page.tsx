@@ -2,14 +2,8 @@
 
 import { CustomContext } from '../socket-provider';
 import styles from './page.module.css';
-import {
-  KeyboardEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import Link from 'next/link';
+import { KeyboardEvent, useContext, useEffect, useRef, useState } from 'react';
 
 interface MessageType {
   timestamp: number;
@@ -58,9 +52,24 @@ export default function Page() {
     }
   }, [messages]);
 
+  const [brandText, setBrandText] = useState('chot');
+
   return (
     <main className={styles.main}>
-      <h1>chot&nbsp;~</h1>
+      <Link
+        href='/'
+        onClick={() => {
+          socket.disconnect();
+        }}
+        onMouseOver={() => {
+          setBrandText('back');
+        }}
+        onMouseLeave={() => {
+          setBrandText('chot');
+        }}
+      >
+        <h1>{brandText}&nbsp;~</h1>
+      </Link>
       <ul className={styles.list} ref={listRef}>
         {messages.map(({ message }) => {
           return (
