@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomContext } from '../socket-provider';
+import { SocketContext } from '../socket-provider';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 
 export default function Page() {
   const router = useRouter();
-  const { socket, setSocket, setSocketID } = useContext(CustomContext);
+  const { socket, setSocket, setSocketID } = useContext(SocketContext);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     const data = new FormData(event.currentTarget);
