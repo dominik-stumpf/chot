@@ -30,6 +30,11 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
+
+  ::selection {
+    color: var(--background);
+    background-color: var(--foreground);
+  }
 }
 
 a {

@@ -1,78 +1,40 @@
 'use client';
 
+import { CustomContext } from './layout';
 import styles from './page.module.css';
-import { KeyboardEvent, useEffect, useRef, useState } from 'react';
-import io from 'socket.io-client';
+import { useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
+import io, { Socket } from 'socket.io-client';
 
-const hostURI = 'http://192.168.0.21';
-const socket = io(hostURI);
+export default function Page() {
+  const router = useRouter();
+  const { socket, setSocket } = useContext(CustomContext);
 
-interface MessageType {
-  timestamp: number;
-  data: string;
-  socketID: string;
-}
-
-interface ResponseMessage {
-  message: MessageType;
-}
-
-export default function Home() {
-  const [messages, setMessages] = useState<ResponseMessage[]>([]);
-  const clientID = useRef<string | undefined>(undefined);
-  const listRef = useRef<null | HTMLUListElement>(null);
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    const data = new FormData(event.currentTarget);
+    event.preventDefault();
+    for (const [key, value] of data.entries()) {
+      if (key === 'host' && typeof value === 'string') {
+        setSocket(io(value));
+      }
+    }
+  };
 
   useEffect(() => {
-    socket.on('m', (message: ResponseMessage) => {
-      setMessages((prev) => [...prev, message]);
-    });
-    socket.on('i', (responseID: string) => {
-      clientID.current = responseID;
-    });
-    socket.on('connect_error', (error) => {
-      console.log(`socket connection error: ${error.message}`);
-    });
-  }, []);
-
-  function sendMessage(event: KeyboardEvent<HTMLTextAreaElement>) {
-    const message = event.currentTarget.value;
-    if (event.key === 'Enter' && !event.shiftKey && message.trim() !== '') {
-      event.preventDefault();
-      socket.emit('m', message);
-      event.currentTarget.value = '';
+    if (socket !== null) {
+      router.push('/chat');
     }
-  }
-
-  useEffect(() => {
-    if (listRef.current !== null) {
-      listRef.current.scrollTop = listRef.current.scrollHeight;
-    }
-  }, [messages]);
+  }, [socket]);
 
   return (
     <main className={styles.main}>
-      <h1>chot&nbsp;~</h1>
-      <ul className={styles.list} ref={listRef}>
-        {messages.map(({ message }) => {
-          return (
-            <li
-              key={message.timestamp}
-              className={
-                clientID.current === message.socketID ? styles.dim : ''
-              }
-            >
-              {message.data}
-            </li>
-          );
-        })}
-      </ul>
-      <textarea
-        className={styles.textInput}
-        rows={1}
-        onKeyDown={sendMessage}
-        // rome-ignore lint/a11y/noAutofocus: <explanation>
-        autoFocus={true}
-      />
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label htmlFor='host'>
+          host
+          <input type='text' id='host' name='host' placeholder='enter uri...' />
+        </label>
+        <input type='submit' value='join' />
+      </form>
     </main>
   );
 }
