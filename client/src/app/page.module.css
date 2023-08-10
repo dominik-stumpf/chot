@@ -30,3 +30,7 @@
   filter: invert(1);
   cursor: pointer;
 }
+
+.form input[type="submit"]:active {
+  filter: invert(0);
+}
