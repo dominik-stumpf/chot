@@ -2,4 +2,4 @@
 
 It's like chat, but chot.
 
-Simplistic and featureless. *for now*
+Simplistic and featureless.
